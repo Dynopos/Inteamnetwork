@@ -15,7 +15,7 @@
     #setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;background:#fff}
     .setup-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#e8c06a,#c89a3a);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#0f0f0f;margin-bottom:24px}
     #setup h2{font-size:22px;font-weight:700;margin-bottom:6px;color:#111}
-    #setup p{color:#888;font-size:14px;margin-bottom:32px;text-align:center}
+    #setup p{color:#888;font-size:14px;margin-bottom:32px;text-align:center;line-height:1.5}
     .field{width:100%;max-width:360px;margin-bottom:14px}
     .field label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px;letter-spacing:.4px}
     .field input{width:100%;padding:13px 16px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:15px;outline:none;transition:border .2s;background:#fafafa}
@@ -29,21 +29,29 @@
     /* DETAILS VIEW */
     #view-details{padding:20px 16px 16px}
     .ticket-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px}
-    .qr-area{display:flex;flex-direction:column;align-items:center;padding:28px 20px 20px;border-bottom:1px dashed #e5e7eb;position:relative}
-    .qr-area canvas{border-radius:8px}
+    .qr-area{display:flex;flex-direction:column;align-items:center;padding:28px 20px 20px;border-bottom:1px dashed #e5e7eb}
+    .qr-area img{border-radius:10px;display:block;width:200px;height:200px}
+    .qr-loading{width:200px;height:200px;background:#f3f4f6;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px}
     .ticket-id{font-size:18px;font-weight:700;letter-spacing:2px;color:#111;margin-top:14px}
     .checked-badge{display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#16a34a;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px;margin-top:8px}
     .ticket-info{padding:16px 20px}
     .ticket-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f3f4f6}
     .ticket-row:last-child{border-bottom:none}
     .ticket-row .label{color:#9ca3af;font-size:14px;display:flex;align-items:center;gap:8px}
-    .ticket-row .value{color:#111;font-size:14px;font-weight:600;text-align:right}
+    .ticket-row .value{color:#111;font-size:14px;font-weight:600;text-align:right;max-width:60%}
+
+    /* SHARE BANNER */
+    .share-banner{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+    .share-banner .icon{font-size:24px;flex-shrink:0}
+    .share-banner p{font-size:13px;color:#1e40af;line-height:1.5}
+    .share-banner strong{display:block;font-size:14px;margin-bottom:2px}
+    .share-url{font-size:12px;color:#2563eb;word-break:break-all;font-weight:600;margin-top:4px;cursor:pointer;text-decoration:underline}
 
     /* NETWORKING */
     .net-section{background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.08);overflow:hidden}
     .net-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
     .net-title{font-size:13px;font-weight:700;letter-spacing:.8px;color:#374151;display:flex;align-items:center;gap:8px}
-    .net-count{font-size:13px;color:#6b7280}
+    .net-count{font-size:13px;color:#6b7280;font-weight:600}
     .scan-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% - 40px);margin:14px 20px;padding:15px;background:#2563eb;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer}
     .scan-btn:active{background:#1d4ed8}
     .conn-list{padding:0 12px 12px}
@@ -52,9 +60,7 @@
     .conn-name{font-size:15px;font-weight:700;color:#111;margin-bottom:2px}
     .conn-company{font-size:13px;color:#6b7280}
     .conn-meta{font-size:12px;color:#9ca3af;margin-top:2px}
-    .conn-acts{display:flex;gap:8px}
     .conn-acts button{background:none;border:none;font-size:18px;cursor:pointer;padding:2px;color:#9ca3af}
-    .conn-acts button:active{color:#374151}
     .conn-tags{display:flex;flex-wrap:wrap;gap:8px}
     .conn-tag{display:inline-flex;align-items:center;gap:6px;background:#eff6ff;color:#1d4ed8;font-size:13px;padding:5px 12px;border-radius:20px;text-decoration:none}
     .conn-tag.green{background:#f0fdf4;color:#16a34a}
@@ -64,7 +70,7 @@
     /* SCANNER */
     #view-scanner{position:fixed;inset:0;background:#000;z-index:100;display:flex;flex-direction:column}
     .scanner-top{display:flex;align-items:center;gap:12px;padding:52px 20px 16px;background:#000}
-    .scanner-top button{background:none;border:none;color:#fff;font-size:15px;cursor:pointer;padding:4px}
+    .scanner-top button{background:none;border:none;color:#fff;font-size:15px;cursor:pointer;padding:4px 8px}
     .scanner-top h3{color:#fff;font-size:17px;font-weight:600}
     .video-wrap{flex:1;position:relative;overflow:hidden}
     #video{width:100%;height:100%;object-fit:cover}
@@ -77,7 +83,8 @@
     .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 
     /* BOTTOM NAV */
-    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50}
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50;max-width:480px}
+    @media(min-width:480px){.bottom-nav{left:50%;transform:translateX(-50%)}}
     .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 14px;border:none;background:none;cursor:pointer;gap:4px;color:#9ca3af;font-size:10px;font-weight:500}
     .nav-btn.active{color:#2563eb}
     .nav-btn svg{width:22px;height:22px}
@@ -87,8 +94,7 @@
     .profile-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
     .profile-card h3{font-size:17px;font-weight:700;margin-bottom:16px;color:#111}
     .profile-field{margin-bottom:14px}
-    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500}
-    .profile-field p{font-size:15px;color:#111;font-weight:500}
+    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500;letter-spacing:.3px}
     .profile-field input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none}
     .profile-field input:focus{border-color:#2563eb}
     .btn-save{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
@@ -100,13 +106,13 @@
 <!-- SETUP -->
 <div id="setup">
   <div class="setup-logo">IT</div>
-  <h2>Selamat Datang</h2>
-  <p>Isi maklumat anda untuk mula networking di event ini</p>
-  <div class="field"><label>NAMA PENUH</label><input id="s-name" placeholder="Nama anda" autocomplete="name"></div>
+  <h2>Selamat Datang!</h2>
+  <p>Isi maklumat anda sekali sahaja.<br>QR code anda akan dijana automatik.</p>
+  <div class="field"><label>NAMA PENUH *</label><input id="s-name" placeholder="Nama anda" autocomplete="name"></div>
   <div class="field"><label>SYARIKAT / ORGANISASI</label><input id="s-company" placeholder="Nama syarikat"></div>
   <div class="field"><label>EMAIL</label><input id="s-email" type="email" placeholder="email@example.com" autocomplete="email"></div>
   <div class="field"><label>NO. TELEFON</label><input id="s-phone" type="tel" placeholder="01X-XXXXXXX" autocomplete="tel"></div>
-  <button class="btn-primary" onclick="saveProfile()">Teruskan →</button>
+  <button class="btn-primary" onclick="saveProfile()">Jana QR Code Saya →</button>
 </div>
 
 <!-- APP -->
@@ -114,9 +120,12 @@
 
   <!-- DETAILS -->
   <div id="view-details">
+
+    <!-- Ticket / QR Card -->
     <div class="ticket-card">
       <div class="qr-area">
-        <canvas id="my-qr"></canvas>
+        <div class="qr-loading" id="qr-loading">Menjana QR...</div>
+        <img id="my-qr" class="hidden" alt="QR Code saya">
         <div class="ticket-id" id="ticket-id">TKT-····</div>
         <div class="checked-badge">✓ Checked in</div>
       </div>
@@ -128,6 +137,17 @@
       </div>
     </div>
 
+    <!-- Share banner -->
+    <div class="share-banner">
+      <div class="icon">🔗</div>
+      <div>
+        <strong>Share link kepada peserta lain</strong>
+        Setiap orang buka link ni, daftar, dapat QR sendiri
+        <div class="share-url" onclick="copyURL()">dynopos.github.io/Inteamnetwork/ 📋</div>
+      </div>
+    </div>
+
+    <!-- Networking -->
     <div class="net-section">
       <div class="net-header">
         <div class="net-title">👥 NETWORKING</div>
@@ -146,7 +166,7 @@
   <!-- PROFILE / SETTINGS -->
   <div id="view-profile" class="hidden">
     <div class="profile-card">
-      <h3>Profile Saya</h3>
+      <h3>👤 Profile Saya</h3>
       <div class="profile-field"><label>NAMA PENUH</label><input id="p-name"></div>
       <div class="profile-field"><label>SYARIKAT</label><input id="p-company"></div>
       <div class="profile-field"><label>EMAIL</label><input id="p-email" type="email"></div>
@@ -162,7 +182,7 @@
       <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Details
     </button>
-    <button class="nav-btn" id="nav-profile" onclick="showView('profile')">
+    <button class="nav-btn" id="nav-profile" onclick="loadProfile(); showView('profile')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       Profile
     </button>
@@ -206,15 +226,15 @@ function saveProfile() {
   const company = document.getElementById('s-company').value.trim();
   const email = document.getElementById('s-email').value.trim();
   const phone = document.getElementById('s-phone').value.trim();
-  if (!name) { showToast('Sila masukkan nama'); return; }
-  const ticket = 'TKT-' + rnd() + '-' + rnd();
+  if (!name) { showToast('Sila masukkan nama anda'); return; }
+  const ticket = 'TKT-' + rnd(4) + '-' + rnd(4);
   profile = { name, company, email, phone, ticket };
   localStorage.setItem('it_profile', JSON.stringify(profile));
   showApp();
 }
 
-function rnd() {
-  return Math.random().toString(36).substring(2, 6).toUpperCase();
+function rnd(n) {
+  return Math.random().toString(36).substring(2, 2 + n).toUpperCase();
 }
 
 function showApp() {
@@ -227,8 +247,25 @@ function showApp() {
 }
 
 function generateQR() {
-  const data = JSON.stringify({ n: profile.name, c: profile.company, e: profile.email, p: profile.phone, t: profile.ticket });
-  QRCode.toCanvas(document.getElementById('my-qr'), data, { width: 200, margin: 2, color: { dark: '#000', light: '#fff' } });
+  const data = JSON.stringify({
+    n: profile.name,
+    c: profile.company || '',
+    e: profile.email || '',
+    p: profile.phone || '',
+    t: profile.ticket
+  });
+  QRCode.toDataURL(data, {
+    width: 200,
+    margin: 2,
+    color: { dark: '#000000', light: '#ffffff' }
+  }, function(err, url) {
+    if (err) { console.error(err); return; }
+    const img = document.getElementById('my-qr');
+    const loading = document.getElementById('qr-loading');
+    img.src = url;
+    img.classList.remove('hidden');
+    loading.classList.add('hidden');
+  });
 }
 
 function renderConnections() {
@@ -248,7 +285,7 @@ function renderConnections() {
           <div class="conn-meta">You added them &bull; Normal Price</div>
         </div>
         <div class="conn-acts">
-          <button onclick="deleteConn(${i})">🗑️</button>
+          <button onclick="deleteConn(${i})" title="Padam">🗑️</button>
         </div>
       </div>
       <div class="conn-tags">
@@ -259,7 +296,7 @@ function renderConnections() {
 }
 
 function esc(s) {
-  return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 function deleteConn(i) {
@@ -286,7 +323,8 @@ async function openScanner() {
 function closeScanner() {
   scanning = false;
   if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-  document.getElementById('video').srcObject = null;
+  const v = document.getElementById('video');
+  v.srcObject = null;
   document.getElementById('view-scanner').classList.add('hidden');
 }
 
@@ -314,7 +352,7 @@ function scanFrame() {
 function addConnection(d) {
   if (d.t === profile.ticket) { showToast('Tak boleh scan diri sendiri 😄'); closeScanner(); return; }
   if (connections.find(c => c.ticket === d.t)) { showToast('Sudah dalam connections'); closeScanner(); return; }
-  connections.push({ name: d.n, company: d.c || '', email: d.e || '', phone: d.p || '', ticket: d.t || '', addedAt: new Date().toISOString() });
+  connections.push({ name: d.n, company: d.c||'', email: d.e||'', phone: d.p||'', ticket: d.t||'', addedAt: new Date().toISOString() });
   localStorage.setItem('it_connections', JSON.stringify(connections));
   showToast('✅ ' + d.n + ' ditambah!');
   closeScanner();
@@ -325,11 +363,21 @@ function showView(v) {
   document.getElementById('view-details').classList.toggle('hidden', v !== 'details');
   document.getElementById('view-profile').classList.toggle('hidden', v !== 'profile');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('nav-' + v)?.classList.add('active');
+  const btn = document.getElementById('nav-' + v);
+  if (btn) btn.classList.add('active');
+}
+
+function loadProfile() {
+  document.getElementById('p-name').value = profile.name;
+  document.getElementById('p-company').value = profile.company || '';
+  document.getElementById('p-email').value = profile.email || '';
+  document.getElementById('p-phone').value = profile.phone || '';
 }
 
 function updateProfile() {
-  profile.name = document.getElementById('p-name').value.trim() || profile.name;
+  const name = document.getElementById('p-name').value.trim();
+  if (!name) { showToast('Nama tidak boleh kosong'); return; }
+  profile.name = name;
   profile.company = document.getElementById('p-company').value.trim();
   profile.email = document.getElementById('p-email').value.trim();
   profile.phone = document.getElementById('p-phone').value.trim();
@@ -341,18 +389,16 @@ function updateProfile() {
 }
 
 function resetApp() {
-  if (!confirm('Reset semua data? Ini akan padam semua connections.')) return;
+  if (!confirm('Reset semua data? Connections akan dipadam.')) return;
   localStorage.removeItem('it_profile');
   localStorage.removeItem('it_connections');
   location.reload();
 }
 
-document.getElementById('nav-profile').addEventListener('click', () => {
-  document.getElementById('p-name').value = profile.name;
-  document.getElementById('p-company').value = profile.company;
-  document.getElementById('p-email').value = profile.email;
-  document.getElementById('p-phone').value = profile.phone;
-});
+function copyURL() {
+  const url = 'https://dynopos.github.io/Inteamnetwork/';
+  navigator.clipboard.writeText(url).then(() => showToast('📋 Link disalin!')).catch(() => showToast(url));
+}
 
 function showToast(msg) {
   const t = document.getElementById('toast');

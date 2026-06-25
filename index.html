@@ -4,14 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Inteam – Event Networking</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     body{background:#f2f2f7;font-family:-apple-system,'Segoe UI',sans-serif;min-height:100vh;padding-bottom:80px}
     .hidden{display:none!important}
-
-    /* SETUP */
     #setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;background:#fff}
     .setup-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#e8c06a,#c89a3a);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#0f0f0f;margin-bottom:24px}
     #setup h2{font-size:22px;font-weight:700;margin-bottom:6px;color:#111}
@@ -22,16 +19,11 @@
     .field input:focus{border-color:#2563eb;background:#fff}
     .btn-primary{width:100%;max-width:360px;padding:15px;background:#2563eb;color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;margin-top:8px}
     .btn-primary:active{opacity:.85}
-
-    /* APP */
     #app{max-width:480px;margin:0 auto}
-
-    /* DETAILS VIEW */
     #view-details{padding:20px 16px 16px}
     .ticket-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px}
     .qr-area{display:flex;flex-direction:column;align-items:center;padding:28px 20px 20px;border-bottom:1px dashed #e5e7eb}
-    .qr-area img{border-radius:10px;display:block;width:200px;height:200px}
-    .qr-loading{width:200px;height:200px;background:#f3f4f6;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px}
+    .qr-area img#my-qr{border-radius:10px;width:200px;height:200px;display:block}
     .ticket-id{font-size:18px;font-weight:700;letter-spacing:2px;color:#111;margin-top:14px}
     .checked-badge{display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#16a34a;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px;margin-top:8px}
     .ticket-info{padding:16px 20px}
@@ -39,15 +31,11 @@
     .ticket-row:last-child{border-bottom:none}
     .ticket-row .label{color:#9ca3af;font-size:14px;display:flex;align-items:center;gap:8px}
     .ticket-row .value{color:#111;font-size:14px;font-weight:600;text-align:right;max-width:60%}
-
-    /* SHARE BANNER */
     .share-banner{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
     .share-banner .icon{font-size:24px;flex-shrink:0}
     .share-banner p{font-size:13px;color:#1e40af;line-height:1.5}
     .share-banner strong{display:block;font-size:14px;margin-bottom:2px}
-    .share-url{font-size:12px;color:#2563eb;word-break:break-all;font-weight:600;margin-top:4px;cursor:pointer;text-decoration:underline}
-
-    /* NETWORKING */
+    .share-url{font-size:12px;color:#2563eb;font-weight:600;margin-top:4px;cursor:pointer;text-decoration:underline}
     .net-section{background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.08);overflow:hidden}
     .net-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
     .net-title{font-size:13px;font-weight:700;letter-spacing:.8px;color:#374151;display:flex;align-items:center;gap:8px}
@@ -66,8 +54,6 @@
     .conn-tag.green{background:#f0fdf4;color:#16a34a}
     .empty-state{padding:32px 20px;text-align:center;color:#9ca3af;font-size:14px}
     .empty-icon{font-size:36px;margin-bottom:10px}
-
-    /* SCANNER */
     #view-scanner{position:fixed;inset:0;background:#000;z-index:100;display:flex;flex-direction:column}
     .scanner-top{display:flex;align-items:center;gap:12px;padding:52px 20px 16px;background:#000}
     .scanner-top button{background:none;border:none;color:#fff;font-size:15px;cursor:pointer;padding:4px 8px}
@@ -78,23 +64,16 @@
     .scan-frame{width:220px;height:220px;border:3px solid #fff;border-radius:20px;box-shadow:0 0 0 9999px rgba(0,0,0,.55)}
     .scan-hint{color:#fff;font-size:14px;margin-top:20px;text-align:center;padding:0 40px;opacity:.85}
     #scan-canvas{display:none}
-
-    /* TOAST */
     .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-
-    /* BOTTOM NAV */
-    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50;max-width:480px}
-    @media(min-width:480px){.bottom-nav{left:50%;transform:translateX(-50%)}}
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50}
     .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 14px;border:none;background:none;cursor:pointer;gap:4px;color:#9ca3af;font-size:10px;font-weight:500}
     .nav-btn.active{color:#2563eb}
     .nav-btn svg{width:22px;height:22px}
-
-    /* PROFILE VIEW */
     #view-profile{padding:20px 16px}
     .profile-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
     .profile-card h3{font-size:17px;font-weight:700;margin-bottom:16px;color:#111}
     .profile-field{margin-bottom:14px}
-    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500;letter-spacing:.3px}
+    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500}
     .profile-field input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none}
     .profile-field input:focus{border-color:#2563eb}
     .btn-save{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
@@ -103,7 +82,6 @@
 </head>
 <body>
 
-<!-- SETUP -->
 <div id="setup">
   <div class="setup-logo">IT</div>
   <h2>Selamat Datang!</h2>
@@ -115,18 +93,12 @@
   <button class="btn-primary" onclick="saveProfile()">Jana QR Code Saya →</button>
 </div>
 
-<!-- APP -->
 <div id="app" class="hidden">
-
-  <!-- DETAILS -->
   <div id="view-details">
-
-    <!-- Ticket / QR Card -->
     <div class="ticket-card">
       <div class="qr-area">
-        <div class="qr-loading" id="qr-loading">Menjana QR...</div>
-        <img id="my-qr" class="hidden" alt="QR Code saya">
-        <div class="ticket-id" id="ticket-id">TKT-····</div>
+        <img id="my-qr" src="" alt="QR Code">
+        <div class="ticket-id" id="ticket-id"></div>
         <div class="checked-badge">✓ Checked in</div>
       </div>
       <div class="ticket-info">
@@ -137,17 +109,15 @@
       </div>
     </div>
 
-    <!-- Share banner -->
     <div class="share-banner">
       <div class="icon">🔗</div>
       <div>
         <strong>Share link kepada peserta lain</strong>
-        Setiap orang buka link ni, daftar, dapat QR sendiri
+        Setiap orang buka link ni → daftar → dapat QR sendiri
         <div class="share-url" onclick="copyURL()">dynopos.github.io/Inteamnetwork/ 📋</div>
       </div>
     </div>
 
-    <!-- Networking -->
     <div class="net-section">
       <div class="net-header">
         <div class="net-title">👥 NETWORKING</div>
@@ -157,13 +127,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         Scan someone
       </button>
-      <div class="conn-list" id="conn-list">
-        <div class="empty-state"><div class="empty-icon">🤝</div>Belum ada connections.<br>Scan QR code orang lain untuk mula!</div>
-      </div>
+      <div class="conn-list" id="conn-list"></div>
     </div>
   </div>
 
-  <!-- PROFILE / SETTINGS -->
   <div id="view-profile" class="hidden">
     <div class="profile-card">
       <h3>👤 Profile Saya</h3>
@@ -176,20 +143,18 @@
     </div>
   </div>
 
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <button class="nav-btn active" id="nav-details" onclick="showView('details')">
       <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Details
     </button>
-    <button class="nav-btn" id="nav-profile" onclick="loadProfile(); showView('profile')">
+    <button class="nav-btn" id="nav-profile" onclick="loadProfile();showView('profile')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       Profile
     </button>
   </nav>
 </div>
 
-<!-- SCANNER -->
 <div id="view-scanner" class="hidden">
   <div class="scanner-top">
     <button onclick="closeScanner()">← Balik</button>
@@ -205,207 +170,165 @@
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast" class="toast hidden"></div>
 
 <script>
-let profile = null, connections = [], stream = null, scanning = false;
+let profile=null,connections=[],stream=null,scanning=false;
 
-function init() {
-  const p = localStorage.getItem('it_profile');
-  const c = localStorage.getItem('it_connections');
-  if (p) {
-    profile = JSON.parse(p);
-    connections = c ? JSON.parse(c) : [];
-    showApp();
-  }
+function init(){
+  const p=localStorage.getItem('it_profile');
+  const c=localStorage.getItem('it_connections');
+  if(p){profile=JSON.parse(p);connections=c?JSON.parse(c):[];showApp();}
 }
 
-function saveProfile() {
-  const name = document.getElementById('s-name').value.trim();
-  const company = document.getElementById('s-company').value.trim();
-  const email = document.getElementById('s-email').value.trim();
-  const phone = document.getElementById('s-phone').value.trim();
-  if (!name) { showToast('Sila masukkan nama anda'); return; }
-  const ticket = 'TKT-' + rnd(4) + '-' + rnd(4);
-  profile = { name, company, email, phone, ticket };
-  localStorage.setItem('it_profile', JSON.stringify(profile));
+function saveProfile(){
+  const name=document.getElementById('s-name').value.trim();
+  if(!name){showToast('Sila masukkan nama anda');return;}
+  profile={
+    name,
+    company:document.getElementById('s-company').value.trim(),
+    email:document.getElementById('s-email').value.trim(),
+    phone:document.getElementById('s-phone').value.trim(),
+    ticket:'TKT-'+rnd(4)+'-'+rnd(4)
+  };
+  localStorage.setItem('it_profile',JSON.stringify(profile));
   showApp();
 }
 
-function rnd(n) {
-  return Math.random().toString(36).substring(2, 2 + n).toUpperCase();
-}
+function rnd(n){return Math.random().toString(36).substring(2,2+n).toUpperCase();}
 
-function showApp() {
+function showApp(){
   document.getElementById('setup').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
-  document.getElementById('t-name').textContent = profile.name;
-  document.getElementById('ticket-id').textContent = profile.ticket;
+  document.getElementById('t-name').textContent=profile.name;
+  document.getElementById('ticket-id').textContent=profile.ticket;
   generateQR();
   renderConnections();
 }
 
-function generateQR() {
-  const data = JSON.stringify({
-    n: profile.name,
-    c: profile.company || '',
-    e: profile.email || '',
-    p: profile.phone || '',
-    t: profile.ticket
-  });
-  QRCode.toDataURL(data, {
-    width: 200,
-    margin: 2,
-    color: { dark: '#000000', light: '#ffffff' }
-  }, function(err, url) {
-    if (err) { console.error(err); return; }
-    const img = document.getElementById('my-qr');
-    const loading = document.getElementById('qr-loading');
-    img.src = url;
-    img.classList.remove('hidden');
-    loading.classList.add('hidden');
-  });
+function generateQR(){
+  const data=JSON.stringify({n:profile.name,c:profile.company||'',e:profile.email||'',p:profile.phone||'',t:profile.ticket});
+  const url='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data='+encodeURIComponent(data);
+  document.getElementById('my-qr').src=url;
 }
 
-function renderConnections() {
-  const n = connections.length;
-  document.getElementById('conn-count').textContent = n + ' connection' + (n !== 1 ? 's' : '');
-  const list = document.getElementById('conn-list');
-  if (!n) {
-    list.innerHTML = '<div class="empty-state"><div class="empty-icon">🤝</div>Belum ada connections.<br>Scan QR code orang lain untuk mula!</div>';
-    return;
-  }
-  list.innerHTML = connections.map((c, i) => `
+function renderConnections(){
+  const n=connections.length;
+  document.getElementById('conn-count').textContent=n+' connection'+(n!==1?'s':'');
+  const list=document.getElementById('conn-list');
+  if(!n){list.innerHTML='<div class="empty-state"><div class="empty-icon">🤝</div>Belum ada connections.<br>Scan QR code orang lain untuk mula!</div>';return;}
+  list.innerHTML=connections.map((c,i)=>`
     <div class="conn-card">
       <div class="conn-top">
         <div>
           <div class="conn-name">${esc(c.name)}</div>
-          ${c.company ? `<div class="conn-company">${esc(c.company)}</div>` : ''}
+          ${c.company?`<div class="conn-company">${esc(c.company)}</div>`:''}
           <div class="conn-meta">You added them &bull; Normal Price</div>
         </div>
-        <div class="conn-acts">
-          <button onclick="deleteConn(${i})" title="Padam">🗑️</button>
-        </div>
+        <div class="conn-acts"><button onclick="deleteConn(${i})">🗑️</button></div>
       </div>
       <div class="conn-tags">
-        ${c.email ? `<a class="conn-tag" href="mailto:${esc(c.email)}">✉️ ${esc(c.email)}</a>` : ''}
-        ${c.phone ? `<a class="conn-tag green" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a>` : ''}
+        ${c.email?`<a class="conn-tag" href="mailto:${esc(c.email)}">✉️ ${esc(c.email)}</a>`:''}
+        ${c.phone?`<a class="conn-tag green" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a>`:''}
       </div>
     </div>`).join('');
 }
 
-function esc(s) {
-  return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-function deleteConn(i) {
-  if (!confirm('Padam ' + connections[i].name + '?')) return;
-  connections.splice(i, 1);
-  localStorage.setItem('it_connections', JSON.stringify(connections));
+function deleteConn(i){
+  if(!confirm('Padam '+connections[i].name+'?'))return;
+  connections.splice(i,1);
+  localStorage.setItem('it_connections',JSON.stringify(connections));
   renderConnections();
 }
 
-async function openScanner() {
+async function openScanner(){
   document.getElementById('view-scanner').classList.remove('hidden');
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    const video = document.getElementById('video');
-    video.srcObject = stream;
-    scanning = true;
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    document.getElementById('video').srcObject=stream;
+    scanning=true;
     requestAnimationFrame(scanFrame);
-  } catch (e) {
-    showToast('Kamera tidak dapat diakses');
-    closeScanner();
-  }
+  }catch(e){showToast('Kamera tidak dapat diakses');closeScanner();}
 }
 
-function closeScanner() {
-  scanning = false;
-  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-  const v = document.getElementById('video');
-  v.srcObject = null;
+function closeScanner(){
+  scanning=false;
+  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
+  document.getElementById('video').srcObject=null;
   document.getElementById('view-scanner').classList.add('hidden');
 }
 
-function scanFrame() {
-  if (!scanning) return;
-  const video = document.getElementById('video');
-  if (video.readyState === video.HAVE_ENOUGH_DATA) {
-    const canvas = document.getElementById('scan-canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0);
-    const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const code = jsQR(img.data, img.width, img.height);
-    if (code) {
-      try {
-        const d = JSON.parse(code.data);
-        if (d.n) { addConnection(d); return; }
-      } catch(e) {}
-    }
+function scanFrame(){
+  if(!scanning)return;
+  const video=document.getElementById('video');
+  if(video.readyState===video.HAVE_ENOUGH_DATA){
+    const canvas=document.getElementById('scan-canvas');
+    canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(video,0,0);
+    const img=ctx.getImageData(0,0,canvas.width,canvas.height);
+    const code=jsQR(img.data,img.width,img.height);
+    if(code){try{const d=JSON.parse(code.data);if(d.n){addConnection(d);return;}}catch(e){}}
   }
   requestAnimationFrame(scanFrame);
 }
 
-function addConnection(d) {
-  if (d.t === profile.ticket) { showToast('Tak boleh scan diri sendiri 😄'); closeScanner(); return; }
-  if (connections.find(c => c.ticket === d.t)) { showToast('Sudah dalam connections'); closeScanner(); return; }
-  connections.push({ name: d.n, company: d.c||'', email: d.e||'', phone: d.p||'', ticket: d.t||'', addedAt: new Date().toISOString() });
-  localStorage.setItem('it_connections', JSON.stringify(connections));
-  showToast('✅ ' + d.n + ' ditambah!');
+function addConnection(d){
+  if(d.t===profile.ticket){showToast('Tak boleh scan diri sendiri 😄');closeScanner();return;}
+  if(connections.find(c=>c.ticket===d.t)){showToast('Sudah dalam connections');closeScanner();return;}
+  connections.push({name:d.n,company:d.c||'',email:d.e||'',phone:d.p||'',ticket:d.t||'',addedAt:new Date().toISOString()});
+  localStorage.setItem('it_connections',JSON.stringify(connections));
+  showToast('✅ '+d.n+' ditambah!');
   closeScanner();
   renderConnections();
 }
 
-function showView(v) {
-  document.getElementById('view-details').classList.toggle('hidden', v !== 'details');
-  document.getElementById('view-profile').classList.toggle('hidden', v !== 'profile');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('nav-' + v);
-  if (btn) btn.classList.add('active');
+function showView(v){
+  document.getElementById('view-details').classList.toggle('hidden',v!=='details');
+  document.getElementById('view-profile').classList.toggle('hidden',v!=='profile');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('nav-'+v);
+  if(btn)btn.classList.add('active');
 }
 
-function loadProfile() {
-  document.getElementById('p-name').value = profile.name;
-  document.getElementById('p-company').value = profile.company || '';
-  document.getElementById('p-email').value = profile.email || '';
-  document.getElementById('p-phone').value = profile.phone || '';
+function loadProfile(){
+  document.getElementById('p-name').value=profile.name;
+  document.getElementById('p-company').value=profile.company||'';
+  document.getElementById('p-email').value=profile.email||'';
+  document.getElementById('p-phone').value=profile.phone||'';
 }
 
-function updateProfile() {
-  const name = document.getElementById('p-name').value.trim();
-  if (!name) { showToast('Nama tidak boleh kosong'); return; }
-  profile.name = name;
-  profile.company = document.getElementById('p-company').value.trim();
-  profile.email = document.getElementById('p-email').value.trim();
-  profile.phone = document.getElementById('p-phone').value.trim();
-  localStorage.setItem('it_profile', JSON.stringify(profile));
-  document.getElementById('t-name').textContent = profile.name;
+function updateProfile(){
+  const name=document.getElementById('p-name').value.trim();
+  if(!name){showToast('Nama tidak boleh kosong');return;}
+  profile.name=name;
+  profile.company=document.getElementById('p-company').value.trim();
+  profile.email=document.getElementById('p-email').value.trim();
+  profile.phone=document.getElementById('p-phone').value.trim();
+  localStorage.setItem('it_profile',JSON.stringify(profile));
+  document.getElementById('t-name').textContent=profile.name;
   generateQR();
   showToast('✅ Profile dikemaskini');
   showView('details');
 }
 
-function resetApp() {
-  if (!confirm('Reset semua data? Connections akan dipadam.')) return;
+function resetApp(){
+  if(!confirm('Reset semua data?'))return;
   localStorage.removeItem('it_profile');
   localStorage.removeItem('it_connections');
   location.reload();
 }
 
-function copyURL() {
-  const url = 'https://dynopos.github.io/Inteamnetwork/';
-  navigator.clipboard.writeText(url).then(() => showToast('📋 Link disalin!')).catch(() => showToast(url));
+function copyURL(){
+  navigator.clipboard.writeText('https://dynopos.github.io/Inteamnetwork/').then(()=>showToast('📋 Link disalin!')).catch(()=>showToast('https://dynopos.github.io/Inteamnetwork/'));
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.remove('hidden');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.add('hidden'), 3000);
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.remove('hidden');
+  clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.add('hidden'),3000);
 }
 
 init();

@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inteam – Contact</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0f0f0f; font-family: 'Segoe UI', sans-serif; padding: 24px; }
@@ -24,7 +25,11 @@
     .btn-gold { background: linear-gradient(135deg, #e8c06a, #c89a3a); color: #0f0f0f; }
     .btn-wa { background: #1ebe57; color: #fff; }
     .btn-outline { background: transparent; color: #aaa; border: 1px solid #333; }
-    footer { margin-top: 28px; color: #444; font-size: 11px; letter-spacing: 0.5px; }
+    .qr-section { margin: 28px 0 0; }
+    .qr-label { color: #555; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+    .qr-wrap { background: #fff; border-radius: 16px; padding: 14px; display: inline-block; }
+    .qr-wrap canvas { display: block; }
+    footer { margin-top: 24px; color: #444; font-size: 11px; letter-spacing: 0.5px; }
   </style>
 </head>
 <body>
@@ -45,9 +50,21 @@
       </a>
       <a class="btn btn-outline" href="mailto:Borhandynopos@gmail.com">✉️ Email</a>
     </div>
+    <div class="qr-section">
+      <p class="qr-label">Scan untuk share</p>
+      <div class="qr-wrap">
+        <canvas id="qr"></canvas>
+      </div>
+    </div>
     <footer>inteam · dynopos.github.io/inteamnetwork</footer>
   </div>
   <script>
+    QRCode.toCanvas(document.getElementById('qr'), 'https://dynopos.github.io/inteamnetwork/', {
+      width: 160,
+      margin: 1,
+      color: { dark: '#0f0f0f', light: '#ffffff' }
+    });
+
     function saveContact() {
       const vcard = ['BEGIN:VCARD','VERSION:3.0','FN:Inteam','ORG:Inteam','TEL;TYPE=CELL:+60182889932','EMAIL:Borhandynopos@gmail.com','URL:https://dynopos.github.io/inteamnetwork','END:VCARD'].join('\r\n');
       const blob = new Blob([vcard], { type: 'text/vcard' });

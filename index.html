@@ -1,61 +1,391 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inteam – Contact</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Inteam – Event Networking</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0f0f0f; font-family: 'Segoe UI', sans-serif; padding: 24px; }
-    .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 24px; padding: 40px 32px 36px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
-    .logo-wrap { width: 88px; height: 88px; border-radius: 50%; background: linear-gradient(135deg, #e8c06a, #c89a3a); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; font-weight: 800; color: #0f0f0f; }
-    h1 { color: #f0f0f0; font-size: 28px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-    .tagline { color: #888; font-size: 13px; margin-top: 6px; letter-spacing: 1px; }
-    .divider { border: none; border-top: 1px solid #2a2a2a; margin: 28px 0; }
-    .info-list { list-style: none; text-align: left; margin-bottom: 28px; }
-    .info-list li { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid #222; color: #ccc; font-size: 15px; }
-    .info-list li:last-child { border-bottom: none; }
-    .info-list .icon { width: 36px; height: 36px; border-radius: 10px; background: #252525; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
-    .info-list a { color: #ccc; text-decoration: none; }
-    .info-list a:hover { color: #e8c06a; }
-    .actions { display: flex; flex-direction: column; gap: 12px; }
-    .btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 14px; font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: opacity 0.2s, transform 0.1s; width: 100%; }
-    .btn:active { transform: scale(0.97); }
-    .btn-gold { background: linear-gradient(135deg, #e8c06a, #c89a3a); color: #0f0f0f; }
-    .btn-wa { background: #1ebe57; color: #fff; }
-    .btn-outline { background: transparent; color: #aaa; border: 1px solid #333; }
-    footer { margin-top: 28px; color: #444; font-size: 11px; letter-spacing: 0.5px; }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    body{background:#f2f2f7;font-family:-apple-system,'Segoe UI',sans-serif;min-height:100vh;padding-bottom:80px}
+    .hidden{display:none!important}
+    #setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;background:#fff}
+    .setup-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#e8c06a,#c89a3a);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#0f0f0f;margin-bottom:24px}
+    #setup h2{font-size:22px;font-weight:700;margin-bottom:6px;color:#111}
+    #setup p{color:#888;font-size:14px;margin-bottom:28px;text-align:center;line-height:1.5}
+    .field{width:100%;max-width:360px;margin-bottom:12px}
+    .field label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px;letter-spacing:.4px}
+    .field input{width:100%;padding:13px 16px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:15px;outline:none;transition:border .2s;background:#fafafa}
+    .field input:focus{border-color:#2563eb;background:#fff}
+    .btn-primary{width:100%;max-width:360px;padding:15px;background:#2563eb;color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;margin-top:8px}
+    .btn-primary:active{opacity:.85}
+    #app{max-width:480px;margin:0 auto}
+    #view-details{padding:20px 16px 16px}
+    .ticket-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px}
+    .qr-area{display:flex;flex-direction:column;align-items:center;padding:28px 20px 20px;border-bottom:1px dashed #e5e7eb}
+    .qr-area img{border-radius:10px;width:200px;height:200px;display:block;background:#f3f4f6}
+    .ticket-id{font-size:17px;font-weight:700;letter-spacing:2px;color:#111;margin-top:14px}
+    .checked-badge{display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#16a34a;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px;margin-top:8px}
+    .info-rows{padding:8px 20px 16px}
+    .info-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid #f3f4f6}
+    .info-row:last-child{border-bottom:none}
+    .info-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .info-icon.blue{background:#eff6ff}
+    .info-icon.green{background:#f0fdf4}
+    .info-icon.fb{background:#eff6ff}
+    .info-icon.tt{background:#fdf4ff}
+    .info-text{flex:1;min-width:0}
+    .info-label{font-size:11px;color:#9ca3af;font-weight:500;margin-bottom:1px}
+    .info-value{font-size:15px;color:#111;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .info-value a{color:#2563eb;text-decoration:none}
+    .info-value.placeholder{color:#d1d5db;font-weight:400;font-size:14px}
+    .share-banner{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+    .share-banner .icon{font-size:22px;flex-shrink:0}
+    .share-banner div{font-size:13px;color:#1e40af;line-height:1.5}
+    .share-banner strong{display:block;font-size:14px;margin-bottom:2px}
+    .share-url{font-size:12px;color:#2563eb;font-weight:600;margin-top:4px;cursor:pointer;text-decoration:underline}
+    .net-section{background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.08);overflow:hidden}
+    .net-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
+    .net-title{font-size:13px;font-weight:700;letter-spacing:.8px;color:#374151;display:flex;align-items:center;gap:8px}
+    .net-count{font-size:13px;color:#6b7280;font-weight:600}
+    .scan-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% - 40px);margin:14px 20px;padding:15px;background:#2563eb;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer}
+    .scan-btn:active{background:#1d4ed8}
+    .conn-list{padding:0 12px 12px}
+    .conn-card{background:#f9fafb;border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid #f3f4f6}
+    .conn-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+    .conn-name{font-size:15px;font-weight:700;color:#111;margin-bottom:2px}
+    .conn-meta{font-size:12px;color:#9ca3af}
+    .conn-acts button{background:none;border:none;font-size:18px;cursor:pointer;padding:2px;color:#9ca3af}
+    .conn-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .conn-tag{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 12px;border-radius:20px;text-decoration:none;font-weight:500}
+    .tag-phone{background:#f0fdf4;color:#16a34a}
+    .tag-fb{background:#eff6ff;color:#1d4ed8}
+    .tag-tt{background:#fdf4ff;color:#7c3aed}
+    .empty-state{padding:32px 20px;text-align:center;color:#9ca3af;font-size:14px}
+    .empty-icon{font-size:36px;margin-bottom:10px}
+    #view-scanner{position:fixed;inset:0;background:#000;z-index:100;display:flex;flex-direction:column}
+    .scanner-top{display:flex;align-items:center;gap:12px;padding:52px 20px 16px;background:#000}
+    .scanner-top button{background:none;border:none;color:#fff;font-size:15px;cursor:pointer;padding:4px 8px}
+    .scanner-top h3{color:#fff;font-size:17px;font-weight:600}
+    .video-wrap{flex:1;position:relative;overflow:hidden}
+    #video{width:100%;height:100%;object-fit:cover}
+    .scan-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+    .scan-frame{width:220px;height:220px;border:3px solid #fff;border-radius:20px;box-shadow:0 0 0 9999px rgba(0,0,0,.55);transition:border-color .2s}
+    .scan-frame.detected{border-color:#22c55e;box-shadow:0 0 0 9999px rgba(0,0,0,.55),0 0 0 4px rgba(34,197,94,.4)}
+    .scan-hint{color:#fff;font-size:14px;margin-top:20px;text-align:center;padding:0 40px;opacity:.85}
+    #scan-canvas{display:none}
+    .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50}
+    .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 14px;border:none;background:none;cursor:pointer;gap:4px;color:#9ca3af;font-size:10px;font-weight:500}
+    .nav-btn.active{color:#2563eb}
+    .nav-btn svg{width:22px;height:22px}
+    #view-profile{padding:20px 16px}
+    .profile-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+    .profile-card h3{font-size:17px;font-weight:700;margin-bottom:16px;color:#111}
+    .profile-field{margin-bottom:12px}
+    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500}
+    .profile-field input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none}
+    .profile-field input:focus{border-color:#2563eb}
+    .btn-save{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
+    .btn-danger{width:100%;padding:14px;background:#fff;color:#ef4444;border:1.5px solid #fecaca;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px}
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo-wrap">IT</div>
-    <h1>Inteam</h1>
-    <p class="tagline">Networking · Collaboration</p>
-    <hr class="divider" />
-    <ul class="info-list">
-      <li><span class="icon">📞</span><a href="tel:+60182889932">018-2889932</a></li>
-      <li><span class="icon">✉️</span><a href="mailto:Borhandynopos@gmail.com">Borhandynopos@gmail.com</a></li>
-    </ul>
-    <div class="actions">
-      <button class="btn btn-gold" onclick="saveContact()">💾 Save Contact</button>
-      <a class="btn btn-wa" href="https://wa.me/60182889932">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.118.549 4.107 1.51 5.837L.057 23.882a.5.5 0 0 0 .61.61l6.101-1.457A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.015-1.38l-.36-.214-3.718.888.903-3.63-.236-.374A9.784 9.784 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
-        WhatsApp
-      </a>
-      <a class="btn btn-outline" href="mailto:Borhandynopos@gmail.com">✉️ Email</a>
+
+<div id="setup">
+  <div class="setup-logo">IT</div>
+  <h2>Selamat Datang!</h2>
+  <p>Isi maklumat anda untuk dapat QR code networking</p>
+  <div class="field"><label>NAMA PENUH *</label><input id="s-name" placeholder="Nama anda" autocomplete="name"></div>
+  <div class="field"><label>NO. TELEFON</label><input id="s-phone" type="tel" placeholder="01X-XXXXXXX" autocomplete="tel"></div>
+  <div class="field"><label>FACEBOOK (username atau link)</label><input id="s-fb" placeholder="cth: borhan123"></div>
+  <div class="field"><label>TIKTOK (username)</label><input id="s-tt" placeholder="cth: @borhan123"></div>
+  <button class="btn-primary" onclick="saveProfile()">Jana QR Code Saya →</button>
+</div>
+
+<div id="app" class="hidden">
+  <div id="view-details">
+    <div class="ticket-card">
+      <div class="qr-area">
+        <img id="my-qr" src="" alt="QR Code">
+        <div class="ticket-id" id="ticket-id"></div>
+        <div class="checked-badge">✓ Checked in</div>
+      </div>
+      <div class="info-rows">
+        <div class="info-row">
+          <div class="info-icon blue">👤</div>
+          <div class="info-text"><div class="info-label">NAMA</div><div class="info-value" id="d-name"></div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon green">📞</div>
+          <div class="info-text"><div class="info-label">NO. TELEFON</div><div class="info-value" id="d-phone"></div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon fb">🅙</div>
+          <div class="info-text"><div class="info-label">FACEBOOK</div><div class="info-value" id="d-fb"></div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon tt">🎵</div>
+          <div class="info-text"><div class="info-label">TIKTOK</div><div class="info-value" id="d-tt"></div></div>
+        </div>
+      </div>
     </div>
-    <footer>inteam · dynopos.github.io/inteamnetwork</footer>
+
+    <div class="share-banner">
+      <div class="icon">🔗</div>
+      <div>
+        <strong>Share link kepada peserta lain</strong>
+        Setiap orang buka link → daftar → dapat QR sendiri
+        <div class="share-url" onclick="copyURL()">dynopos.github.io/Inteamnetwork/ 📋</div>
+      </div>
+    </div>
+
+    <div class="net-section">
+      <div class="net-header">
+        <div class="net-title">👥 NETWORKING</div>
+        <div class="net-count" id="conn-count">0 connections</div>
+      </div>
+      <button class="scan-btn" onclick="openScanner()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Scan someone
+      </button>
+      <div class="conn-list" id="conn-list"></div>
+    </div>
   </div>
-  <script>
-    function saveContact() {
-      const vcard = ['BEGIN:VCARD','VERSION:3.0','FN:Inteam','ORG:Inteam','TEL;TYPE=CELL:+60182889932','EMAIL:Borhandynopos@gmail.com','URL:https://dynopos.github.io/inteamnetwork','END:VCARD'].join('\r\n');
-      const blob = new Blob([vcard], { type: 'text/vcard' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'inteam.vcf'; a.click();
-      URL.revokeObjectURL(url);
+
+  <div id="view-profile" class="hidden">
+    <div class="profile-card">
+      <h3>👤 Profile Saya</h3>
+      <div class="profile-field"><label>NAMA PENUH</label><input id="p-name"></div>
+      <div class="profile-field"><label>NO. TELEFON</label><input id="p-phone" type="tel"></div>
+      <div class="profile-field"><label>FACEBOOK (username atau link)</label><input id="p-fb" placeholder="cth: borhan123"></div>
+      <div class="profile-field"><label>TIKTOK (username)</label><input id="p-tt" placeholder="cth: @borhan123"></div>
+      <button class="btn-save" onclick="updateProfile()">Simpan Perubahan</button>
+      <button class="btn-danger" onclick="resetApp()">Reset & Daftar Semula</button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-details" onclick="showView('details')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Details
+    </button>
+    <button class="nav-btn" id="nav-profile" onclick="loadProfile();showView('profile')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      Profile
+    </button>
+  </nav>
+</div>
+
+<div id="view-scanner" class="hidden">
+  <div class="scanner-top">
+    <button onclick="closeScanner()">← Balik</button>
+    <h3>Scan QR Code</h3>
+  </div>
+  <div class="video-wrap">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="scan-canvas"></canvas>
+    <div class="scan-overlay">
+      <div class="scan-frame"></div>
+      <p class="scan-hint">Arahkan kamera ke QR code peserta lain</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+let profile=null,connections=[],stream=null,scanning=false;
+
+function fbUrl(v){
+  if(!v)return'';
+  if(v.startsWith('http'))return v;
+  if(v.includes('facebook.com'))return'https://'+v;
+  return'https://facebook.com/'+v;
+}
+
+function ttUrl(v){
+  if(!v)return'';
+  if(v.startsWith('http'))return v;
+  const u=v.startsWith('@')?v:'@'+v;
+  return'https://www.tiktok.com/'+u;
+}
+
+function init(){
+  const p=localStorage.getItem('it_profile');
+  const c=localStorage.getItem('it_connections');
+  if(p){profile=JSON.parse(p);connections=c?JSON.parse(c):[];showApp();}
+}
+
+function saveProfile(){
+  const name=document.getElementById('s-name').value.trim();
+  if(!name){showToast('Sila masukkan nama anda');return;}
+  profile={name,phone:document.getElementById('s-phone').value.trim(),fb:document.getElementById('s-fb').value.trim(),tt:document.getElementById('s-tt').value.trim(),ticket:'TKT-'+rnd(4)+'-'+rnd(4)};
+  localStorage.setItem('it_profile',JSON.stringify(profile));
+  showApp();
+}
+
+function rnd(n){return Math.random().toString(36).substring(2,2+n).toUpperCase();}
+
+function showApp(){
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('ticket-id').textContent=profile.ticket;
+  updateDisplay();
+  generateQR();
+  renderConnections();
+}
+
+function updateDisplay(){
+  document.getElementById('d-name').textContent=profile.name||'';
+
+  const phone=document.getElementById('d-phone');
+  if(profile.phone){phone.innerHTML=`<a href="tel:${esc(profile.phone)}">${esc(profile.phone)}</a>`;phone.className='info-value';}
+  else{phone.textContent='Tiada';phone.className='info-value placeholder';}
+
+  const fb=document.getElementById('d-fb');
+  if(profile.fb){fb.innerHTML=`<a href="${esc(fbUrl(profile.fb))}" target="_blank">${esc(profile.fb)}</a>`;fb.className='info-value';}
+  else{fb.textContent='Tiada';fb.className='info-value placeholder';}
+
+  const tt=document.getElementById('d-tt');
+  if(profile.tt){tt.innerHTML=`<a href="${esc(ttUrl(profile.tt))}" target="_blank">${esc(profile.tt)}</a>`;tt.className='info-value';}
+  else{tt.textContent='Tiada';tt.className='info-value placeholder';}
+}
+
+function generateQR(){
+  const data=JSON.stringify({n:profile.name,p:profile.phone||'',f:profile.fb||'',tt:profile.tt||'',t:profile.ticket});
+  document.getElementById('my-qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data='+encodeURIComponent(data);
+}
+
+function renderConnections(){
+  const n=connections.length;
+  document.getElementById('conn-count').textContent=n+' connection'+(n!==1?'s':'');
+  const list=document.getElementById('conn-list');
+  if(!n){list.innerHTML='<div class="empty-state"><div class="empty-icon">🤝</div>Belum ada connections.<br>Scan QR code orang lain untuk mula!</div>';return;}
+  list.innerHTML=connections.map((c,i)=>{
+    const tags=[];
+    if(c.phone)tags.push(`<a class="conn-tag tag-phone" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a>`);
+    if(c.fb)tags.push(`<a class="conn-tag tag-fb" href="${esc(fbUrl(c.fb))}" target="_blank">🅙 ${esc(c.fb)}</a>`);
+    if(c.tt)tags.push(`<a class="conn-tag tag-tt" href="${esc(ttUrl(c.tt))}" target="_blank">🎵 ${esc(c.tt)}</a>`);
+    return`<div class="conn-card">
+      <div class="conn-top">
+        <div><div class="conn-name">${esc(c.name)}</div><div class="conn-meta">You added them</div></div>
+        <div class="conn-acts"><button onclick="deleteConn(${i})">🗑️</button></div>
+      </div>
+      <div class="conn-tags">${tags.join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function deleteConn(i){
+  if(!confirm('Padam '+connections[i].name+'?'))return;
+  connections.splice(i,1);
+  localStorage.setItem('it_connections',JSON.stringify(connections));
+  renderConnections();
+}
+
+async function openScanner(){
+  document.getElementById('view-scanner').classList.remove('hidden');
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    document.getElementById('video').srcObject=stream;
+    scanning=true;
+    requestAnimationFrame(scanFrame);
+  }catch(e){showToast('Kamera tidak dapat diakses');closeScanner();}
+}
+
+function closeScanner(){
+  scanning=false;
+  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
+  document.getElementById('video').srcObject=null;
+  document.getElementById('view-scanner').classList.add('hidden');
+}
+
+function scanFrame(){
+  if(!scanning)return;
+  const video=document.getElementById('video');
+  if(video.readyState===video.HAVE_ENOUGH_DATA){
+    const canvas=document.getElementById('scan-canvas');
+    canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(video,0,0);
+    const img=ctx.getImageData(0,0,canvas.width,canvas.height);
+    const code=jsQR(img.data,img.width,img.height);
+    if(code){
+      document.querySelector('.scan-frame').classList.add('detected');
+      try{
+        const d=JSON.parse(code.data);
+        if(d.n){addConnection(d);return;}
+        else{showToast('QR bukan dari app Inteam');closeScanner();return;}
+      }catch(e){showToast('QR tidak dikenali — minta orang tu guna app Inteam');closeScanner();return;}
+    }else{
+      document.querySelector('.scan-frame').classList.remove('detected');
     }
-  </script>
+  }
+  requestAnimationFrame(scanFrame);
+}
+
+function addConnection(d){
+  if(d.t===profile.ticket){showToast('Tak boleh scan diri sendiri 😄');closeScanner();return;}
+  if(connections.find(c=>c.ticket===d.t)){showToast('Sudah dalam connections');closeScanner();return;}
+  connections.push({name:d.n,phone:d.p||'',fb:d.f||'',tt:d.tt||'',ticket:d.t||'',addedAt:new Date().toISOString()});
+  localStorage.setItem('it_connections',JSON.stringify(connections));
+  showToast('✅ '+d.n+' ditambah!');
+  closeScanner();
+  renderConnections();
+}
+
+function showView(v){
+  document.getElementById('view-details').classList.toggle('hidden',v!=='details');
+  document.getElementById('view-profile').classList.toggle('hidden',v!=='profile');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('nav-'+v);
+  if(btn)btn.classList.add('active');
+}
+
+function loadProfile(){
+  document.getElementById('p-name').value=profile.name||'';
+  document.getElementById('p-phone').value=profile.phone||'';
+  document.getElementById('p-fb').value=profile.fb||'';
+  document.getElementById('p-tt').value=profile.tt||'';
+}
+
+function updateProfile(){
+  const name=document.getElementById('p-name').value.trim();
+  if(!name){showToast('Nama tidak boleh kosong');return;}
+  profile.name=name;
+  profile.phone=document.getElementById('p-phone').value.trim();
+  profile.fb=document.getElementById('p-fb').value.trim();
+  profile.tt=document.getElementById('p-tt').value.trim();
+  localStorage.setItem('it_profile',JSON.stringify(profile));
+  updateDisplay();
+  generateQR();
+  showToast('✅ Profile dikemaskini');
+  showView('details');
+}
+
+function resetApp(){
+  if(!confirm('Reset semua data? Connections akan dipadam.'))return;
+  localStorage.removeItem('it_profile');
+  localStorage.removeItem('it_connections');
+  location.reload();
+}
+
+function copyURL(){
+  navigator.clipboard.writeText('https://dynopos.github.io/Inteamnetwork/')
+    .then(()=>showToast('📋 Link disalin!'))
+    .catch(()=>showToast('https://dynopos.github.io/Inteamnetwork/'));
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.remove('hidden');
+  clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.add('hidden'),3000);
+}
+
+init();
+</script>
 </body>
 </html>

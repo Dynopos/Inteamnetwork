@@ -9,6 +9,8 @@
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     body{background:#f2f2f7;font-family:-apple-system,'Segoe UI',sans-serif;min-height:100vh;padding-bottom:80px}
     .hidden{display:none!important}
+
+    /* SETUP */
     #setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;background:#fff}
     .setup-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#e8c06a,#c89a3a);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#0f0f0f;margin-bottom:24px}
     #setup h2{font-size:22px;font-weight:700;margin-bottom:6px;color:#111}
@@ -19,8 +21,12 @@
     .field input:focus{border-color:#2563eb;background:#fff}
     .btn-primary{width:100%;max-width:360px;padding:15px;background:#2563eb;color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;margin-top:8px}
     .btn-primary:active{opacity:.85}
+
+    /* APP */
     #app{max-width:480px;margin:0 auto}
-    #view-details{padding:20px 16px 16px}
+
+    /* QR TAB */
+    #view-qr{padding:20px 16px 16px}
     .ticket-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px}
     .qr-area{display:flex;flex-direction:column;align-items:center;padding:28px 20px 20px;border-bottom:1px dashed #e5e7eb}
     .qr-area img{border-radius:10px;width:200px;height:200px;display:block;background:#f3f4f6}
@@ -30,10 +36,7 @@
     .info-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid #f3f4f6}
     .info-row:last-child{border-bottom:none}
     .info-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-    .info-icon.blue{background:#eff6ff}
-    .info-icon.green{background:#f0fdf4}
-    .info-icon.fb{background:#eff6ff}
-    .info-icon.tt{background:#fdf4ff}
+    .info-icon.blue{background:#eff6ff}.info-icon.green{background:#f0fdf4}.info-icon.fb{background:#eff6ff}.info-icon.tt{background:#fdf4ff}
     .info-text{flex:1;min-width:0}
     .info-label{font-size:11px;color:#9ca3af;font-weight:500;margin-bottom:1px}
     .info-value{font-size:15px;color:#111;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -44,25 +47,63 @@
     .share-banner div{font-size:13px;color:#1e40af;line-height:1.5}
     .share-banner strong{display:block;font-size:14px;margin-bottom:2px}
     .share-url{font-size:12px;color:#2563eb;font-weight:600;margin-top:4px;cursor:pointer;text-decoration:underline}
-    .net-section{background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.08);overflow:hidden}
-    .net-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
-    .net-title{font-size:13px;font-weight:700;letter-spacing:.8px;color:#374151;display:flex;align-items:center;gap:8px}
-    .net-count{font-size:13px;color:#6b7280;font-weight:600}
-    .scan-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% - 40px);margin:14px 20px;padding:15px;background:#2563eb;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer}
-    .scan-btn:active{background:#1d4ed8}
-    .conn-list{padding:0 12px 12px}
-    .conn-card{background:#f9fafb;border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid #f3f4f6}
-    .conn-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-    .conn-name{font-size:15px;font-weight:700;color:#111;margin-bottom:2px}
-    .conn-meta{font-size:12px;color:#9ca3af}
-    .conn-acts button{background:none;border:none;font-size:18px;cursor:pointer;padding:2px;color:#9ca3af}
-    .conn-tags{display:flex;flex-wrap:wrap;gap:8px}
-    .conn-tag{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 12px;border-radius:20px;text-decoration:none;font-weight:500}
-    .tag-phone{background:#f0fdf4;color:#16a34a}
-    .tag-fb{background:#eff6ff;color:#1d4ed8}
-    .tag-tt{background:#fdf4ff;color:#7c3aed}
-    .empty-state{padding:32px 20px;text-align:center;color:#9ca3af;font-size:14px}
-    .empty-icon{font-size:36px;margin-bottom:10px}
+    .scan-big-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;background:#2563eb;color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:600;cursor:pointer}
+    .scan-big-btn:active{background:#1d4ed8}
+
+    /* CONNECTIONS DASHBOARD TAB */
+    #view-connections{padding:16px}
+    .dash-header{margin-bottom:16px}
+    .dash-title{font-size:20px;font-weight:800;color:#111;margin-bottom:4px}
+    .dash-sub{font-size:13px;color:#6b7280}
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .stat-card{background:#fff;border-radius:16px;padding:14px 12px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+    .stat-num{font-size:26px;font-weight:800;color:#2563eb;line-height:1}
+    .stat-num.green{color:#16a34a}
+    .stat-num.amber{color:#d97706}
+    .stat-label{font-size:10px;color:#9ca3af;font-weight:600;letter-spacing:.5px;margin-top:4px;text-transform:uppercase}
+    .search-row{display:flex;gap:8px;margin-bottom:12px}
+    .search-box{flex:1;display:flex;align-items:center;background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;padding:0 12px;gap:8px}
+    .search-box input{flex:1;padding:11px 0;border:none;outline:none;font-size:14px;background:transparent}
+    .search-box span{color:#9ca3af;font-size:16px}
+    .btn-export{background:#f0fdf4;border:1.5px solid #bbf7d0;color:#16a34a;border-radius:12px;padding:0 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+    .filter-row{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px}
+    .filter-chip{padding:6px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;white-space:nowrap;flex-shrink:0}
+    .filter-chip.active{background:#2563eb;border-color:#2563eb;color:#fff}
+    .sort-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .sort-label{font-size:12px;color:#9ca3af}
+    .sort-select{font-size:13px;color:#374151;font-weight:600;border:none;background:transparent;outline:none;cursor:pointer}
+    .dash-conn-list{}
+    .dash-conn-card{background:#fff;border-radius:16px;padding:16px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+    .dc-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .dc-avatar{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#e8c06a,#c89a3a);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#0f0f0f;flex-shrink:0}
+    .dc-info{flex:1;min-width:0}
+    .dc-name{font-size:15px;font-weight:700;color:#111}
+    .dc-time{font-size:11px;color:#9ca3af;margin-top:2px}
+    .dc-del{background:none;border:none;font-size:18px;cursor:pointer;color:#d1d5db;padding:4px}
+    .dc-actions{display:flex;flex-wrap:wrap;gap:8px}
+    .dc-act{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:600;border:none;cursor:pointer}
+    .act-call{background:#f0fdf4;color:#16a34a}
+    .act-wa{background:#dcfce7;color:#15803d}
+    .act-fb{background:#eff6ff;color:#1d4ed8}
+    .act-tt{background:#fdf4ff;color:#7c3aed}
+    .no-results{padding:40px 20px;text-align:center;color:#9ca3af;font-size:14px}
+    .no-results-icon{font-size:40px;margin-bottom:10px}
+    .dash-footer{display:flex;gap:10px;margin-top:16px}
+    .btn-del-all{flex:1;padding:13px;background:#fff;color:#ef4444;border:1.5px solid #fecaca;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer}
+    .btn-export-big{flex:1;padding:13px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer}
+
+    /* PROFILE TAB */
+    #view-profile{padding:20px 16px}
+    .profile-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+    .profile-card h3{font-size:17px;font-weight:700;margin-bottom:16px;color:#111}
+    .profile-field{margin-bottom:12px}
+    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500}
+    .profile-field input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none}
+    .profile-field input:focus{border-color:#2563eb}
+    .btn-save{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
+    .btn-danger{width:100%;padding:14px;background:#fff;color:#ef4444;border:1.5px solid #fecaca;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px}
+
+    /* SCANNER */
     #view-scanner{position:fixed;inset:0;background:#000;z-index:100;display:flex;flex-direction:column}
     .scanner-top{display:flex;align-items:center;gap:12px;padding:52px 20px 16px;background:#000}
     .scanner-top button{background:none;border:none;color:#fff;font-size:15px;cursor:pointer;padding:4px 8px}
@@ -74,24 +115,22 @@
     .scan-frame.detected{border-color:#22c55e;box-shadow:0 0 0 9999px rgba(0,0,0,.55),0 0 0 4px rgba(34,197,94,.4)}
     .scan-hint{color:#fff;font-size:14px;margin-top:20px;text-align:center;padding:0 40px;opacity:.85}
     #scan-canvas{display:none}
+
+    /* TOAST */
     .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+
+    /* BOTTOM NAV */
     .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50}
     .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 14px;border:none;background:none;cursor:pointer;gap:4px;color:#9ca3af;font-size:10px;font-weight:500}
     .nav-btn.active{color:#2563eb}
     .nav-btn svg{width:22px;height:22px}
-    #view-profile{padding:20px 16px}
-    .profile-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-    .profile-card h3{font-size:17px;font-weight:700;margin-bottom:16px;color:#111}
-    .profile-field{margin-bottom:12px}
-    .profile-field label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;font-weight:500}
-    .profile-field input{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none}
-    .profile-field input:focus{border-color:#2563eb}
-    .btn-save{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
-    .btn-danger{width:100%;padding:14px;background:#fff;color:#ef4444;border:1.5px solid #fecaca;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px}
+    .nav-badge{background:#ef4444;color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:2px;display:none}
+    .nav-badge.show{display:inline}
   </style>
 </head>
 <body>
 
+<!-- SETUP -->
 <div id="setup">
   <div class="setup-logo">IT</div>
   <h2>Selamat Datang!</h2>
@@ -103,8 +142,11 @@
   <button class="btn-primary" onclick="saveProfile()">Jana QR Code Saya →</button>
 </div>
 
+<!-- APP -->
 <div id="app" class="hidden">
-  <div id="view-details">
+
+  <!-- TAB: QR SAYA -->
+  <div id="view-qr" style="padding:20px 16px 16px">
     <div class="ticket-card">
       <div class="qr-area">
         <img id="my-qr" src="" alt="QR Code">
@@ -112,25 +154,12 @@
         <div class="checked-badge">✓ Checked in</div>
       </div>
       <div class="info-rows">
-        <div class="info-row">
-          <div class="info-icon blue">👤</div>
-          <div class="info-text"><div class="info-label">NAMA</div><div class="info-value" id="d-name"></div></div>
-        </div>
-        <div class="info-row">
-          <div class="info-icon green">📞</div>
-          <div class="info-text"><div class="info-label">NO. TELEFON</div><div class="info-value" id="d-phone"></div></div>
-        </div>
-        <div class="info-row">
-          <div class="info-icon fb">🅙</div>
-          <div class="info-text"><div class="info-label">FACEBOOK</div><div class="info-value" id="d-fb"></div></div>
-        </div>
-        <div class="info-row">
-          <div class="info-icon tt">🎵</div>
-          <div class="info-text"><div class="info-label">TIKTOK</div><div class="info-value" id="d-tt"></div></div>
-        </div>
+        <div class="info-row"><div class="info-icon blue">👤</div><div class="info-text"><div class="info-label">NAMA</div><div class="info-value" id="d-name"></div></div></div>
+        <div class="info-row"><div class="info-icon green">📞</div><div class="info-text"><div class="info-label">NO. TELEFON</div><div class="info-value" id="d-phone"></div></div></div>
+        <div class="info-row"><div class="info-icon fb">🅙</div><div class="info-text"><div class="info-label">FACEBOOK</div><div class="info-value" id="d-fb"></div></div></div>
+        <div class="info-row"><div class="info-icon tt">🎵</div><div class="info-text"><div class="info-label">TIKTOK</div><div class="info-value" id="d-tt"></div></div></div>
       </div>
     </div>
-
     <div class="share-banner">
       <div class="icon">🔗</div>
       <div>
@@ -139,20 +168,54 @@
         <div class="share-url" onclick="copyURL()">dynopos.github.io/Inteamnetwork/ 📋</div>
       </div>
     </div>
+    <button class="scan-big-btn" onclick="openScanner()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Scan Someone
+    </button>
+  </div>
 
-    <div class="net-section">
-      <div class="net-header">
-        <div class="net-title">👥 NETWORKING</div>
-        <div class="net-count" id="conn-count">0 connections</div>
+  <!-- TAB: CONNECTIONS DASHBOARD -->
+  <div id="view-connections" class="hidden">
+    <div class="dash-header">
+      <div class="dash-title">Connections</div>
+      <div class="dash-sub">Semua orang yang anda telah scan</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total</div></div>
+      <div class="stat-card"><div class="stat-num green" id="stat-today">0</div><div class="stat-label">Hari Ini</div></div>
+      <div class="stat-card"><div class="stat-num amber" id="stat-week">0</div><div class="stat-label">Minggu Ini</div></div>
+    </div>
+    <div class="search-row">
+      <div class="search-box">
+        <span>🔍</span>
+        <input id="search-input" placeholder="Cari nama, telefon..." oninput="renderDashboard()">
       </div>
-      <button class="scan-btn" onclick="openScanner()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        Scan someone
-      </button>
-      <div class="conn-list" id="conn-list"></div>
+      <button class="btn-export" onclick="exportCSV()">⬇ CSV</button>
+    </div>
+    <div class="filter-row">
+      <button class="filter-chip active" data-f="all" onclick="setFilter('all')">Semua</button>
+      <button class="filter-chip" data-f="today" onclick="setFilter('today')">Hari Ini</button>
+      <button class="filter-chip" data-f="week" onclick="setFilter('week')">Minggu Ini</button>
+      <button class="filter-chip" data-f="phone" onclick="setFilter('phone')">Ada Telefon</button>
+      <button class="filter-chip" data-f="fb" onclick="setFilter('fb')">Ada FB</button>
+      <button class="filter-chip" data-f="tt" onclick="setFilter('tt')">Ada TikTok</button>
+    </div>
+    <div class="sort-row">
+      <span class="sort-label" id="result-count">0 connections</span>
+      <select class="sort-select" id="sort-select" onchange="renderDashboard()">
+        <option value="newest">Terbaru dulu</option>
+        <option value="oldest">Terlama dulu</option>
+        <option value="name">A – Z</option>
+      </select>
+    </div>
+    <div id="dash-conn-list"></div>
+    <div class="dash-footer">
+      <button class="btn-del-all" onclick="deleteAll()">🗑 Padam Semua</button>
+      <button class="btn-export-big" onclick="exportCSV()">⬇ Export CSV</button>
     </div>
   </div>
 
+  <!-- TAB: PROFILE -->
   <div id="view-profile" class="hidden">
     <div class="profile-card">
       <h3>👤 Profile Saya</h3>
@@ -165,10 +228,15 @@
     </div>
   </div>
 
+  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-    <button class="nav-btn active" id="nav-details" onclick="showView('details')">
+    <button class="nav-btn active" id="nav-qr" onclick="showView('qr')">
       <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Details
+      QR Saya
+    </button>
+    <button class="nav-btn" id="nav-connections" onclick="showView('connections')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Connections<span class="nav-badge" id="conn-badge"></span>
     </button>
     <button class="nav-btn" id="nav-profile" onclick="loadProfile();showView('profile')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
@@ -177,6 +245,7 @@
   </nav>
 </div>
 
+<!-- SCANNER -->
 <div id="view-scanner" class="hidden">
   <div class="scanner-top">
     <button onclick="closeScanner()">← Balik</button>
@@ -195,21 +264,13 @@
 <div id="toast" class="toast hidden"></div>
 
 <script>
-let profile=null,connections=[],stream=null,scanning=false;
+let profile=null,connections=[],stream=null,scanning=false,activeFilter='all';
 
-function fbUrl(v){
-  if(!v)return'';
-  if(v.startsWith('http'))return v;
-  if(v.includes('facebook.com'))return'https://'+v;
-  return'https://facebook.com/'+v;
-}
-
-function ttUrl(v){
-  if(!v)return'';
-  if(v.startsWith('http'))return v;
-  const u=v.startsWith('@')?v:'@'+v;
-  return'https://www.tiktok.com/'+u;
-}
+function fbUrl(v){if(!v)return'';if(v.startsWith('http'))return v;if(v.includes('facebook.com'))return'https://'+v;return'https://facebook.com/'+v;}
+function ttUrl(v){if(!v)return'';if(v.startsWith('http'))return v;const u=v.startsWith('@')?v:'@'+v;return'https://www.tiktok.com/'+u;}
+function waUrl(v){if(!v)return'';const d=v.replace(/\D/g,'');const n=d.startsWith('0')?'6'+d:d;return'https://wa.me/'+n;}
+function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function rnd(n){return Math.random().toString(36).substring(2,2+n).toUpperCase();}
 
 function init(){
   const p=localStorage.getItem('it_profile');
@@ -225,28 +286,21 @@ function saveProfile(){
   showApp();
 }
 
-function rnd(n){return Math.random().toString(36).substring(2,2+n).toUpperCase();}
-
 function showApp(){
   document.getElementById('setup').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('ticket-id').textContent=profile.ticket;
-  updateDisplay();
-  generateQR();
-  renderConnections();
+  updateDisplay();generateQR();updateBadge();
 }
 
 function updateDisplay(){
   document.getElementById('d-name').textContent=profile.name||'';
-
   const phone=document.getElementById('d-phone');
   if(profile.phone){phone.innerHTML=`<a href="tel:${esc(profile.phone)}">${esc(profile.phone)}</a>`;phone.className='info-value';}
   else{phone.textContent='Tiada';phone.className='info-value placeholder';}
-
   const fb=document.getElementById('d-fb');
   if(profile.fb){fb.innerHTML=`<a href="${esc(fbUrl(profile.fb))}" target="_blank">${esc(profile.fb)}</a>`;fb.className='info-value';}
   else{fb.textContent='Tiada';fb.className='info-value placeholder';}
-
   const tt=document.getElementById('d-tt');
   if(profile.tt){tt.innerHTML=`<a href="${esc(ttUrl(profile.tt))}" target="_blank">${esc(profile.tt)}</a>`;tt.className='info-value';}
   else{tt.textContent='Tiada';tt.className='info-value placeholder';}
@@ -257,42 +311,121 @@ function generateQR(){
   document.getElementById('my-qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data='+encodeURIComponent(data);
 }
 
-function renderConnections(){
+function updateBadge(){
+  const badge=document.getElementById('conn-badge');
   const n=connections.length;
-  document.getElementById('conn-count').textContent=n+' connection'+(n!==1?'s':'');
-  const list=document.getElementById('conn-list');
-  if(!n){list.innerHTML='<div class="empty-state"><div class="empty-icon">🤝</div>Belum ada connections.<br>Scan QR code orang lain untuk mula!</div>';return;}
-  list.innerHTML=connections.map((c,i)=>{
-    const tags=[];
-    if(c.phone)tags.push(`<a class="conn-tag tag-phone" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a>`);
-    if(c.fb)tags.push(`<a class="conn-tag tag-fb" href="${esc(fbUrl(c.fb))}" target="_blank">🅙 ${esc(c.fb)}</a>`);
-    if(c.tt)tags.push(`<a class="conn-tag tag-tt" href="${esc(ttUrl(c.tt))}" target="_blank">🎵 ${esc(c.tt)}</a>`);
-    return`<div class="conn-card">
-      <div class="conn-top">
-        <div><div class="conn-name">${esc(c.name)}</div><div class="conn-meta">You added them</div></div>
-        <div class="conn-acts"><button onclick="deleteConn(${i})">🗑️</button></div>
+  badge.textContent=n>99?'99+':n;
+  badge.classList.toggle('show',n>0);
+}
+
+/* DASHBOARD */
+function isToday(iso){
+  if(!iso)return false;
+  const d=new Date(iso),t=new Date();
+  return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
+}
+function isThisWeek(iso){
+  if(!iso)return false;
+  const d=new Date(iso),now=new Date();
+  const start=new Date(now);start.setDate(now.getDate()-now.getDay());start.setHours(0,0,0,0);
+  return d>=start;
+}
+function fmtTime(iso){
+  if(!iso)return'';
+  const d=new Date(iso);
+  if(isToday(iso))return'Hari ini, '+d.toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'});
+  return d.toLocaleDateString('ms-MY',{day:'numeric',month:'short',year:'numeric'})+', '+d.toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'});
+}
+function initials(name){return(name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+
+function setFilter(f){
+  activeFilter=f;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));
+  renderDashboard();
+}
+
+function renderDashboard(){
+  document.getElementById('stat-total').textContent=connections.length;
+  document.getElementById('stat-today').textContent=connections.filter(c=>isToday(c.addedAt)).length;
+  document.getElementById('stat-week').textContent=connections.filter(c=>isThisWeek(c.addedAt)).length;
+
+  const q=(document.getElementById('search-input').value||'').toLowerCase();
+  const sort=document.getElementById('sort-select').value;
+  let list=[...connections];
+
+  if(activeFilter==='today')list=list.filter(c=>isToday(c.addedAt));
+  else if(activeFilter==='week')list=list.filter(c=>isThisWeek(c.addedAt));
+  else if(activeFilter==='phone')list=list.filter(c=>c.phone);
+  else if(activeFilter==='fb')list=list.filter(c=>c.fb);
+  else if(activeFilter==='tt')list=list.filter(c=>c.tt);
+
+  if(q)list=list.filter(c=>(c.name+c.phone+c.fb+c.tt).toLowerCase().includes(q));
+
+  if(sort==='newest')list.sort((a,b)=>new Date(b.addedAt)-new Date(a.addedAt));
+  else if(sort==='oldest')list.sort((a,b)=>new Date(a.addedAt)-new Date(b.addedAt));
+  else if(sort==='name')list.sort((a,b)=>a.name.localeCompare(b.name));
+
+  document.getElementById('result-count').textContent=list.length+' connection'+(list.length!==1?'s':'');
+
+  const el=document.getElementById('dash-conn-list');
+  if(!list.length){
+    el.innerHTML=`<div class="no-results"><div class="no-results-icon">${q||activeFilter!=='all'?'🔍':'🤝'}</div>${q||activeFilter!=='all'?'Tiada hasil ditemui.':'Belum ada connections.<br>Scan QR code orang lain untuk mula!'}</div>`;
+    return;
+  }
+
+  el.innerHTML=list.map(c=>{
+    const ri=connections.findIndex(x=>x.ticket===c.ticket);
+    const acts=[];
+    if(c.phone)acts.push(`<a class="dc-act act-call" href="tel:${esc(c.phone)}">📞 Call</a>`);
+    if(c.phone)acts.push(`<a class="dc-act act-wa" href="${esc(waUrl(c.phone))}" target="_blank">💬 WhatsApp</a>`);
+    if(c.fb)acts.push(`<a class="dc-act act-fb" href="${esc(fbUrl(c.fb))}" target="_blank">🅙 Facebook</a>`);
+    if(c.tt)acts.push(`<a class="dc-act act-tt" href="${esc(ttUrl(c.tt))}" target="_blank">🎵 TikTok</a>`);
+    return`<div class="dash-conn-card">
+      <div class="dc-top">
+        <div class="dc-avatar">${esc(initials(c.name))}</div>
+        <div class="dc-info"><div class="dc-name">${esc(c.name)}</div><div class="dc-time">${fmtTime(c.addedAt)}</div></div>
+        <button class="dc-del" onclick="deleteConn(${ri})">🗑️</button>
       </div>
-      <div class="conn-tags">${tags.join('')}</div>
+      <div class="dc-actions">${acts.join('')||'<span style="font-size:12px;color:#d1d5db">Tiada maklumat hubungi</span>'}</div>
     </div>`;
   }).join('');
 }
-
-function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function deleteConn(i){
   if(!confirm('Padam '+connections[i].name+'?'))return;
   connections.splice(i,1);
   localStorage.setItem('it_connections',JSON.stringify(connections));
-  renderConnections();
+  updateBadge();renderDashboard();
 }
 
+function deleteAll(){
+  if(!connections.length){showToast('Tiada connections untuk dipadam');return;}
+  if(!confirm('Padam SEMUA '+connections.length+' connections?'))return;
+  connections=[];
+  localStorage.setItem('it_connections',JSON.stringify(connections));
+  updateBadge();renderDashboard();
+  showToast('🗑 Semua connections dipadam');
+}
+
+function exportCSV(){
+  if(!connections.length){showToast('Tiada data untuk export');return;}
+  const rows=[['Nama','Telefon','Facebook','TikTok','Ticket','Masa Ditambah']];
+  connections.forEach(c=>rows.push([c.name,c.phone||'',c.fb||'',c.tt||'',c.ticket||'',c.addedAt||'']));
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
+  a.download='inteam-connections-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+  showToast('✅ CSV berjaya diexport!');
+}
+
+/* SCANNER */
 async function openScanner(){
   document.getElementById('view-scanner').classList.remove('hidden');
   try{
     stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
     document.getElementById('video').srcObject=stream;
-    scanning=true;
-    requestAnimationFrame(scanFrame);
+    scanning=true;requestAnimationFrame(scanFrame);
   }catch(e){showToast('Kamera tidak dapat diakses');closeScanner();}
 }
 
@@ -332,17 +465,18 @@ function addConnection(d){
   if(connections.find(c=>c.ticket===d.t)){showToast('Sudah dalam connections');closeScanner();return;}
   connections.push({name:d.n,phone:d.p||'',fb:d.f||'',tt:d.tt||'',ticket:d.t||'',addedAt:new Date().toISOString()});
   localStorage.setItem('it_connections',JSON.stringify(connections));
+  updateBadge();
   showToast('✅ '+d.n+' ditambah!');
   closeScanner();
-  renderConnections();
 }
 
+/* NAV */
 function showView(v){
-  document.getElementById('view-details').classList.toggle('hidden',v!=='details');
-  document.getElementById('view-profile').classList.toggle('hidden',v!=='profile');
+  ['qr','connections','profile'].forEach(x=>document.getElementById('view-'+x).classList.toggle('hidden',x!==v));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   const btn=document.getElementById('nav-'+v);
   if(btn)btn.classList.add('active');
+  if(v==='connections')renderDashboard();
 }
 
 function loadProfile(){
@@ -355,22 +489,16 @@ function loadProfile(){
 function updateProfile(){
   const name=document.getElementById('p-name').value.trim();
   if(!name){showToast('Nama tidak boleh kosong');return;}
-  profile.name=name;
-  profile.phone=document.getElementById('p-phone').value.trim();
-  profile.fb=document.getElementById('p-fb').value.trim();
-  profile.tt=document.getElementById('p-tt').value.trim();
+  profile.name=name;profile.phone=document.getElementById('p-phone').value.trim();
+  profile.fb=document.getElementById('p-fb').value.trim();profile.tt=document.getElementById('p-tt').value.trim();
   localStorage.setItem('it_profile',JSON.stringify(profile));
-  updateDisplay();
-  generateQR();
-  showToast('✅ Profile dikemaskini');
-  showView('details');
+  updateDisplay();generateQR();
+  showToast('✅ Profile dikemaskini');showView('qr');
 }
 
 function resetApp(){
   if(!confirm('Reset semua data? Connections akan dipadam.'))return;
-  localStorage.removeItem('it_profile');
-  localStorage.removeItem('it_connections');
-  location.reload();
+  localStorage.removeItem('it_profile');localStorage.removeItem('it_connections');location.reload();
 }
 
 function copyURL(){

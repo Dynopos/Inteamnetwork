@@ -70,7 +70,8 @@
     .video-wrap{flex:1;position:relative;overflow:hidden}
     #video{width:100%;height:100%;object-fit:cover}
     .scan-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-    .scan-frame{width:220px;height:220px;border:3px solid #fff;border-radius:20px;box-shadow:0 0 0 9999px rgba(0,0,0,.55)}
+    .scan-frame{width:220px;height:220px;border:3px solid #fff;border-radius:20px;box-shadow:0 0 0 9999px rgba(0,0,0,.55);transition:border-color .2s}
+    .scan-frame.detected{border-color:#22c55e;box-shadow:0 0 0 9999px rgba(0,0,0,.55),0 0 0 4px rgba(34,197,94,.4)}
     .scan-hint{color:#fff;font-size:14px;margin-top:20px;text-align:center;padding:0 40px;opacity:.85}
     #scan-canvas{display:none}
     .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
@@ -312,7 +313,16 @@ function scanFrame(){
     ctx.drawImage(video,0,0);
     const img=ctx.getImageData(0,0,canvas.width,canvas.height);
     const code=jsQR(img.data,img.width,img.height);
-    if(code){try{const d=JSON.parse(code.data);if(d.n){addConnection(d);return;}}catch(e){}}
+    if(code){
+      document.querySelector('.scan-frame').classList.add('detected');
+      try{
+        const d=JSON.parse(code.data);
+        if(d.n){addConnection(d);return;}
+        else{showToast('QR bukan dari app Inteam');closeScanner();return;}
+      }catch(e){showToast('QR tidak dikenali — minta orang tu guna app Inteam');closeScanner();return;}
+    }else{
+      document.querySelector('.scan-frame').classList.remove('detected');
+    }
   }
   requestAnimationFrame(scanFrame);
 }

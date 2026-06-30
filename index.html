@@ -116,6 +116,28 @@
     .scan-hint{color:#fff;font-size:14px;margin-top:20px;text-align:center;padding:0 40px;opacity:.85}
     #scan-canvas{display:none}
 
+    /* SHARED PROFILE */
+    #view-shared{min-height:100vh;background:#f2f2f7;padding:24px 16px}
+    .shared-back{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#2563eb;font-weight:600;margin-bottom:16px;cursor:pointer;background:none;border:none;padding:0}
+    .shared-hero{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px}
+    .shared-top{background:linear-gradient(135deg,#e8c06a,#c89a3a);padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center}
+    .shared-avatar{width:72px;height:72px;border-radius:22px;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#0f0f0f;margin-bottom:12px}
+    .shared-name{font-size:22px;font-weight:800;color:#0f0f0f;text-align:center}
+    .shared-ticket{font-size:12px;color:rgba(0,0,0,.5);margin-top:4px;letter-spacing:1px}
+    .shared-actions{padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+    .shared-act-row{display:flex;gap:8px}
+    .shared-act-row a,.shared-act-row button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:14px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer}
+    .sa-call{background:#f0fdf4;color:#16a34a}
+    .sa-wa{background:#dcfce7;color:#15803d}
+    .sa-fb{background:#eff6ff;color:#1d4ed8}
+    .sa-tt{background:#fdf4ff;color:#7c3aed}
+    .sa-add{background:#2563eb;color:#fff;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:14px;font-size:16px;font-weight:700;border:none;cursor:pointer;margin-top:4px}
+    .sa-add:active{background:#1d4ed8}
+    .sa-add.done{background:#16a34a}
+    .shared-join{background:#fff;border-radius:16px;padding:16px;text-align:center;font-size:13px;color:#6b7280;line-height:1.6}
+    .shared-join strong{display:block;font-size:15px;color:#111;margin-bottom:4px}
+    .shared-join .btn-primary{margin-top:12px;font-size:14px;padding:12px}
+
     /* TOAST */
     .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 
@@ -261,6 +283,26 @@
   </div>
 </div>
 
+<!-- SHARED PROFILE (opened via QR scan) -->
+<div id="view-shared" class="hidden">
+  <button class="shared-back" onclick="location.href='https://dynopos.github.io/Inteamnetwork/'">← Daftar / Log Masuk</button>
+  <div class="shared-hero">
+    <div class="shared-top">
+      <div class="shared-avatar" id="sh-avatar"></div>
+      <div class="shared-name" id="sh-name"></div>
+      <div class="shared-ticket" id="sh-ticket"></div>
+    </div>
+    <div class="shared-actions" id="sh-actions"></div>
+  </div>
+  <div class="shared-join">
+    <strong>Nak simpan contact ni?</strong>
+    Buka app Inteam, scan QR code dia terus — connection akan disimpan automatik.
+    <br><br>
+    Belum ada akaun?
+    <button class="btn-primary" onclick="location.href='https://dynopos.github.io/Inteamnetwork/'">Daftar Sekarang →</button>
+  </div>
+</div>
+
 <div id="toast" class="toast hidden"></div>
 
 <script>
@@ -273,9 +315,25 @@ function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 function rnd(n){return Math.random().toString(36).substring(2,2+n).toUpperCase();}
 
 function init(){
+  const params=new URLSearchParams(location.search);
+  const c=params.get('c');
+  if(c){try{const d=JSON.parse(decodeURIComponent(escape(atob(c))));showSharedProfile(d);return;}catch(e){}}
   const p=localStorage.getItem('it_profile');
-  const c=localStorage.getItem('it_connections');
-  if(p){profile=JSON.parse(p);connections=c?JSON.parse(c):[];showApp();}
+  const conn=localStorage.getItem('it_connections');
+  if(p){profile=JSON.parse(p);connections=conn?JSON.parse(conn):[];showApp();}
+}
+
+function showSharedProfile(d){
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('view-shared').classList.remove('hidden');
+  document.getElementById('sh-avatar').textContent=initials(d.n);
+  document.getElementById('sh-name').textContent=d.n||'';
+  document.getElementById('sh-ticket').textContent=d.t||'';
+  const acts=[];
+  if(d.p)acts.push(`<div class="shared-act-row"><a class="sa-call" href="tel:${esc(d.p)}">📞 Call</a><a class="sa-wa" href="${esc(waUrl(d.p))}" target="_blank">💬 WhatsApp</a></div>`);
+  if(d.f)acts.push(`<div class="shared-act-row"><a class="sa-fb" href="${esc(fbUrl(d.f))}" target="_blank">🅙 Facebook</a></div>`);
+  if(d.tt)acts.push(`<div class="shared-act-row"><a class="sa-tt" href="${esc(ttUrl(d.tt))}" target="_blank">🎵 TikTok</a></div>`);
+  document.getElementById('sh-actions').innerHTML=acts.join('');
 }
 
 function saveProfile(){
@@ -308,7 +366,8 @@ function updateDisplay(){
 
 function generateQR(){
   const data=JSON.stringify({n:profile.name,p:profile.phone||'',f:profile.fb||'',tt:profile.tt||'',t:profile.ticket});
-  document.getElementById('my-qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data='+encodeURIComponent(data);
+  const url='https://dynopos.github.io/Inteamnetwork/?c='+encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
+  document.getElementById('my-qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data='+encodeURIComponent(url);
 }
 
 function updateBadge(){
@@ -449,8 +508,14 @@ function scanFrame(){
     if(code){
       document.querySelector('.scan-frame').classList.add('detected');
       try{
-        const d=JSON.parse(code.data);
-        if(d.n){addConnection(d);return;}
+        let d=null;
+        if(code.data.includes('dynopos.github.io/Inteamnetwork')){
+          const u=new URL(code.data);const c=u.searchParams.get('c');
+          if(c)d=JSON.parse(decodeURIComponent(escape(atob(c))));
+        }else{
+          d=JSON.parse(code.data);
+        }
+        if(d&&d.n){addConnection(d);return;}
         else{showToast('QR bukan dari app Inteam');closeScanner();return;}
       }catch(e){showToast('QR tidak dikenali — minta orang tu guna app Inteam');closeScanner();return;}
     }else{
